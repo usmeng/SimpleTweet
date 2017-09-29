@@ -39,7 +39,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
 
     @Override
     public void onBindViewHolder(TweetHolderView holder, int position) {
-
         Tweet tweet = mData.get(position);
 
         User user = tweet.getUser();
@@ -70,10 +69,17 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
     }
 
     // Add a list of items -- change to type used
-    public void addAll(List<Tweet> list) {
+    public void addToTail(List<Tweet> list) {
         mData.addAll(list);
         notifyDataSetChanged();
     }
+
+    // Add a list of items -- change to type used
+    public void addToHead(List<Tweet> list) {
+        mData.addAll(0, list);
+        notifyDataSetChanged();
+    }
+
 
     class TweetHolderView extends RecyclerView.ViewHolder {
         View mView;

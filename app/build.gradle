@@ -8,6 +8,11 @@ android {
         applicationId "com.meng.simpletweet"
         minSdkVersion 17
         targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        android.compileOptions.sourceCompatibility 1.8
+        android.compileOptions.targetCompatibility 1.8
     }
 
     // Related to https://github.com/scribejava/scribejava/issues/480
