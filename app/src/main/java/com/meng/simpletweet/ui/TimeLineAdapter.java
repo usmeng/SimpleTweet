@@ -80,6 +80,17 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
         notifyDataSetChanged();
     }
 
+    // Add a list of items -- change to type used
+    public void addToTail(Tweet tweet) {
+        mData.add(tweet);
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addToHead(Tweet tweet) {
+        mData.add(0, tweet);
+        notifyDataSetChanged();
+    }
 
     class TweetHolderView extends RecyclerView.ViewHolder {
         View mView;

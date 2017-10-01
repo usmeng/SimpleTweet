@@ -43,6 +43,20 @@ public class TimeLinePresenter {
         });
     }
 
+    public void postTweet(Tweet tweet) {
+        RestApplication.getRestClient().postTweet(tweet.getContent(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
     public void loadTimelineFromLocal(int page, int totalItemsCount) {
         mTimeLineView.showHistoryTweets(new ArrayList<>());
     }

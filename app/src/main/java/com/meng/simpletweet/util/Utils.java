@@ -1,5 +1,9 @@
 package com.meng.simpletweet.util;
 
+import android.content.Context;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
 import org.json.JSONArray;
 
 import java.io.BufferedWriter;
@@ -8,12 +12,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by mengzhou on 9/28/17.
  */
 
 public class Utils {
+
+    public static void showInputMethod(View v, boolean show) {
+        InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(!show) imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        else imm.showSoftInputFromInputMethod(v.getWindowToken(), 0);
+    }
 
     public static void writeToCacheDir(JSONArray json) {
         try {
@@ -38,6 +49,12 @@ public class Utils {
             e.printStackTrace();
         }
         return System.currentTimeMillis();
+    }
+
+    // Thu Sep 28 22:41:07 +0000 2017
+    public static String convertTimeStamp(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ssZ yyyy");
+        return format.format(date);
     }
 
     public static String getTime(String time) {

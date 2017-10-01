@@ -18,11 +18,16 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TweetClient> {
 		setContentView(R.layout.activity_login);
 	}
 
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		getClient().clearAccessToken();
+	}
 
 	// Inflate the menu; this adds items to the action bar if it is present.
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.login, menu);
+		getMenuInflater().inflate(R.menu.home_menu, menu);
 		return true;
 	}
 
@@ -45,7 +50,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TweetClient> {
 
 	// Click handler method for the button used to start OAuth flow
 	// Uses the client to initiate OAuth authorization
-	// This should be tied to a button used to login
+	// This should be tied to a button used to home_menu
 	public void loginToRest(View view) {
 		getClient().connect();
 	}

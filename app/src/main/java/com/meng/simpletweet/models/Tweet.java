@@ -3,6 +3,7 @@ package com.meng.simpletweet.models;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.meng.simpletweet.data.MyDatabase;
+import com.meng.simpletweet.util.Utils;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -13,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /*
@@ -100,6 +102,12 @@ public class Tweet extends BaseModel {
     }
 
     public Tweet() {
+    }
+
+    public Tweet(String content) {
+        this.content = content;
+        this.createdTime = Utils.convertTimeStamp(new Date());
+        this.user = new User("meng");
     }
 
     public static Tweet from(JSONObject object) {

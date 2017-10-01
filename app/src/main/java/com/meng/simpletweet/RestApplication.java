@@ -1,5 +1,6 @@
 package com.meng.simpletweet;
 
+import com.meng.simpletweet.models.User;
 import com.meng.simpletweet.net.TweetClient;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowLog;

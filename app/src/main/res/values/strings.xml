@@ -2,8 +2,14 @@
 <resources>
 
     <string name="app_name">SimpleTwitter</string>
+    <string name="home_title"> Home </string>
     <string name="login_label">Log in</string>
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">codepathtweets</string>
+    <string name="search">search</string>
+    <string name="tweet">tweet</string>
+    <string name="what_is_happening">what\'s happening?</string>
+    <string name="excess_limited_words">Excess limited words!</string>
+    <string name="can_excess_140_words">can\'t excess 140 words </string>
 
 </resources>
