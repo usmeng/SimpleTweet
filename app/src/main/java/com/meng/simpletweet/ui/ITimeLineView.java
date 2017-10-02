@@ -22,5 +22,9 @@ public interface ITimeLineView {
      */
     void showHistoryTweets(List<Tweet> tweets);
 
-    void showFetchTweetError(String message);
+    void showError(String message);
+
+    void showTweetDetail(Tweet from);
+
+    void showPostDonePage(Tweet from);
 }

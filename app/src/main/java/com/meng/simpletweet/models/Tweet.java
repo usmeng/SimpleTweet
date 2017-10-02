@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import com.meng.simpletweet.data.MyDatabase;
 import com.meng.simpletweet.util.Utils;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -53,9 +54,29 @@ public class Tweet extends BaseModel {
     boolean favorited;
     @Column
     boolean retweeted;
-
+    @Column
+    @ForeignKey
     User user;
     Entity entities;
+
+    public Tweet() {
+    }
+
+    public Tweet(String content) {
+        this.content = content;
+        this.createdTime = Utils.convertTimeStamp(new Date());
+        this.user = new User("meng");
+    }
+
+    public static Tweet from(JSONObject object) {
+        Tweet tweet = new Gson().fromJson(object.toString(), Tweet.class);
+        tweet.save();
+        return tweet;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getCreatedTime() {
         return createdTime;
@@ -99,21 +120,6 @@ public class Tweet extends BaseModel {
 
     public Entity getEntities() {
         return entities;
-    }
-
-    public Tweet() {
-    }
-
-    public Tweet(String content) {
-        this.content = content;
-        this.createdTime = Utils.convertTimeStamp(new Date());
-        this.user = new User("meng");
-    }
-
-    public static Tweet from(JSONObject object) {
-        Tweet tweet = new Gson().fromJson(object.toString(), Tweet.class);
-        tweet.save();
-        return tweet;
     }
 
     public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {

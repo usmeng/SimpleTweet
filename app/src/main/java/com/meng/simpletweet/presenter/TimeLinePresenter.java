@@ -4,17 +4,18 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.meng.simpletweet.RestApplication;
 import com.meng.simpletweet.models.Tweet;
 import com.meng.simpletweet.ui.ITimeLineView;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by mengzhou on 9/29/17.
  */
-
 public class TimeLinePresenter {
 
     ITimeLineView mTimeLineView;
@@ -38,26 +39,50 @@ public class TimeLinePresenter {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                mTimeLineView.showFetchTweetError(responseString + " : " + throwable.getMessage());
+                mTimeLineView.showError(responseString + " : " + throwable.getMessage());
             }
         });
     }
 
-    public void postTweet(Tweet tweet) {
-        RestApplication.getRestClient().postTweet(tweet.getContent(), new JsonHttpResponseHandler() {
+    public void retrieveTweet(String id) {
+        RestApplication.getRestClient().retrieveTweet(id, new JsonHttpResponseHandler() {
+
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                mTimeLineView.showTweetDetail(Tweet.from(response));
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                mTimeLineView.showError(responseString + " : " + throwable.getMessage());
             }
         });
     }
 
-    public void loadTimelineFromLocal(int page, int totalItemsCount) {
-        mTimeLineView.showHistoryTweets(new ArrayList<>());
+    public void postTweet(String tweet) {
+        RestApplication.getRestClient().postTweet(tweet, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                mTimeLineView.showPostDonePage(Tweet.from(response));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                mTimeLineView.showError(responseString + " : " + throwable.getMessage());
+            }
+        });
+    }
+
+    public void loadTimelineFromLocal(int page) {
+        final int QUERY_LENGTH = 20;
+        List<Tweet> tweets = SQLite.select().from(Tweet.class).offset(page * QUERY_LENGTH).limit(QUERY_LENGTH).queryList();
+//        for(Tweet tweet : tweets) {
+//            tweet.setUser();
+//        }
+        mTimeLineView.showHistoryTweets(tweets);
     }
 }

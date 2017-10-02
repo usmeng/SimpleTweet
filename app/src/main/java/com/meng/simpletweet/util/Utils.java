@@ -3,6 +3,7 @@ package com.meng.simpletweet.util;
 import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -19,6 +20,10 @@ import java.util.Date;
  */
 
 public class Utils {
+
+    public static void showToast(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
 
     public static void showInputMethod(View v, boolean show) {
         InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

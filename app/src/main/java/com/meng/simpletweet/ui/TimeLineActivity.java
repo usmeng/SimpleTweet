@@ -90,7 +90,7 @@ public class TimeLineActivity extends AppCompatActivity implements ITimeLineView
         mTimeLineRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                mTimeLinePresenter.loadTimelineFromLocal(page, totalItemsCount);
+                mTimeLinePresenter.loadTimelineFromLocal(page);
             }
         });
     }
@@ -155,7 +155,8 @@ public class TimeLineActivity extends AppCompatActivity implements ITimeLineView
     private void postTweet(String contentEt) {
         Tweet tweet = new Tweet(contentEt);
         mAdapter.addToHead(tweet);
-        mTimeLinePresenter.postTweet(tweet);
+        tweet.save();
+        mTimeLinePresenter.postTweet(contentEt);
     }
 
     private boolean checkInput(EditText contentEt, TextView wordCount) {
@@ -180,6 +181,7 @@ public class TimeLineActivity extends AppCompatActivity implements ITimeLineView
     public void showFreshTweets(List<Tweet> tweets) {
         // ...the data has come back, add new items to your adapter...
         mAdapter.addToHead(tweets);
+        for(Tweet tweet : tweets) tweet.save();
         if (mSwipeContainer.isRefreshing()) mSwipeContainer.setRefreshing(false);
     }
 
@@ -194,8 +196,18 @@ public class TimeLineActivity extends AppCompatActivity implements ITimeLineView
     }
 
     @Override
-    public void showFetchTweetError(String message) {
+    public void showError(String message) {
         if (mSwipeContainer.isRefreshing()) mSwipeContainer.setRefreshing(false);
+    }
+
+    @Override
+    public void showTweetDetail(Tweet from) {
+
+    }
+
+    @Override
+    public void showPostDonePage(Tweet from) {
+
     }
 
 }

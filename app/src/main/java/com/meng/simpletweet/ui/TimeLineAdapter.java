@@ -1,20 +1,27 @@
 package com.meng.simpletweet.ui;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.meng.simpletweet.R;
 import com.meng.simpletweet.models.Tweet;
 import com.meng.simpletweet.models.User;
+import com.meng.simpletweet.ui.widgets.PatternEditableBuilder;
 import com.meng.simpletweet.util.Utils;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by mengzhou on 9/28/17.
@@ -25,11 +32,14 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
     private List<Tweet> mData;
     private final LayoutInflater mInflater;
     private Context mContext;
+    private final PatternEditableBuilder mEditableBuilder;
 
     TimeLineAdapter(List<Tweet> data, Context context) {
         mContext = context;
         mData = data;
         mInflater = LayoutInflater.from(context);
+
+        mEditableBuilder = new PatternEditableBuilder();
     }
 
     @Override
@@ -42,20 +52,17 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
         Tweet tweet = mData.get(position);
 
         User user = tweet.getUser();
-        holder.mUserNameTv.setText(user.getName());
+        if(user != null) holder.mUserNameTv.setText(user.getName());
         holder.mTweetTimeTv.setText(Utils.getTime(tweet.getCreatedTime()));
         holder.mTweetContentTv.setText(tweet.getContent());
-        holder.mTweetContentTv.setLines(tweet.getContent().length() / 50);
+        mEditableBuilder.addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE, text -> Utils.showToast(mContext, text)).into(holder.mTweetContentTv);
+        holder.mTweetContentTv.setLines(tweet.getContent().length() / 40 + 1);
 
-        Glide.with(mContext).load(user.profile_image_url).into(holder.mHeadIcon);
+        if(user!= null) Glide.with(mContext).load(user.profile_image_url).into(holder.mHeadIcon);
         holder.mCommentTv.setText(String.valueOf(tweet.getRetweet_count()));
         holder.mSaveTv.setText(String.valueOf(tweet.getFavorite_count()));
 
         holder.mAttachImg.setVisibility(View.INVISIBLE);
-        /*if(tweet.getUserHandle().length() > 0) {
-            holder.mAttachImg.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(tweet.getUserHandle()).into(holder.mAttachImg);
-        } else holder.mAttachImg.setVisibility(View.GONE);*/
     }
 
     @Override
