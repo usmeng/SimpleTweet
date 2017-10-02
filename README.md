@@ -45,7 +45,7 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-** [x] Use MVP architecture to separate presentation layer and data layer
+ * [x] Use MVP architecture to separate presentation layer and data layer
  * [x] Use ReycleView instead of listview
  * [x] Use Constrainlayout instead of Linerlayout and relativelayout
 
