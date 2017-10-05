@@ -1,17 +1,13 @@
-package com.meng.simpletweet.ui;
+package com.meng.simpletweet.ui.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.meng.simpletweet.R;
@@ -34,7 +30,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
     private Context mContext;
     private final PatternEditableBuilder mEditableBuilder;
 
-    TimeLineAdapter(List<Tweet> data, Context context) {
+    public TimeLineAdapter(List<Tweet> data, Context context) {
         mContext = context;
         mData = data;
         mInflater = LayoutInflater.from(context);
@@ -55,6 +51,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
         if(user != null) holder.mUserNameTv.setText(user.getName());
         holder.mTweetTimeTv.setText(Utils.getTime(tweet.getCreatedTime()));
         holder.mTweetContentTv.setText(tweet.getContent());
+        if(user != null) holder.mAtUserTv.setText("@" + user.getScreen_name());
         mEditableBuilder.addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE, text -> Utils.showToast(mContext, text)).into(holder.mTweetContentTv);
         holder.mTweetContentTv.setLines(tweet.getContent().length() / 40 + 1);
 

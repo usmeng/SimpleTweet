@@ -35,7 +35,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TweetClient> {
 	// i.e Display application "homepage"
 	@Override
 	public void onLoginSuccess() {
-		Intent i = new Intent(this, TimeLineActivity.class);
+		Intent i = new Intent(this, HomeActivity.class);
 		startActivity(i);
 		Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
 	}

@@ -1,4 +1,4 @@
-package com.meng.simpletweet.ui;
+package com.meng.simpletweet.ui.fragments;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;

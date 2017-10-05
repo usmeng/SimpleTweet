@@ -2,6 +2,7 @@ package com.meng.simpletweet.presenter;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.meng.simpletweet.RestApplication;
+import com.meng.simpletweet.datamodel.TweetModel;
 import com.meng.simpletweet.models.Tweet;
 import com.meng.simpletweet.ui.ITimeLineView;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -19,70 +20,41 @@ import cz.msebera.android.httpclient.Header;
 public class TimeLinePresenter {
 
     ITimeLineView mTimeLineView;
+    private final TweetModel tweetModel;
 
     public TimeLinePresenter(ITimeLineView iTimeLineView) {
         this.mTimeLineView = iTimeLineView;
+
+        tweetModel = new TweetModel();
     }
 
     // Send the network request to fetch the updated data
     // `client` here is an instance of Android Async HTTP
     // getHomeTimeline is an example endpoint.
     public void fetchTimelineAsync(int page) {
-        RestApplication.getRestClient().getHomeTimeline(page, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                super.onSuccess(statusCode, headers, json);
-                mTimeLineView.showFreshTweets(Tweet.fromJson(json));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                mTimeLineView.showError(responseString + " : " + throwable.getMessage());
-            }
+        tweetModel.fetchTimelineAsync(0, (list, message) -> {
+            if(list != null) mTimeLineView.showFreshTweets(list);
+            else mTimeLineView.showError(message);
         });
     }
 
     public void retrieveTweet(String id) {
-        RestApplication.getRestClient().retrieveTweet(id, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                mTimeLineView.showTweetDetail(Tweet.from(response));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                mTimeLineView.showError(responseString + " : " + throwable.getMessage());
-            }
+        tweetModel.retrieveTweet(id, (tweet, message) -> {
+            if(tweet != null) mTimeLineView.showTweetDetail(tweet);
+            else mTimeLineView.showError(message);
         });
     }
 
-    public void postTweet(String tweet) {
-        RestApplication.getRestClient().postTweet(tweet, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                mTimeLineView.showPostDonePage(Tweet.from(response));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                mTimeLineView.showError(responseString + " : " + throwable.getMessage());
-            }
+    public void postTweet(String tweetStr) {
+        tweetModel.postTweet(tweetStr, (tweet, message) -> {
+            if(tweet != null) mTimeLineView.showPostDonePage(tweet);
+            else mTimeLineView.showError(message);
         });
     }
 
     public void loadTimelineFromLocal(int page) {
-        final int QUERY_LENGTH = 20;
-        List<Tweet> tweets = SQLite.select().from(Tweet.class).offset(page * QUERY_LENGTH).limit(QUERY_LENGTH).queryList();
-//        for(Tweet tweet : tweets) {
-//            tweet.setUser();
-//        }
-        mTimeLineView.showHistoryTweets(tweets);
+        tweetModel.loadTimelineFromLocal(page, (list, message) -> {
+            if(list != null) mTimeLineView.showHistoryTweets(list);
+        });
     }
 }

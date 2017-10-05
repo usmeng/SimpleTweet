@@ -11,25 +11,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
         android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
         android:textAlignment="center"
-        app:titleTextColor="@android:color/black" >
+        app:titleTextColor="@android:color/black">
 
-        <include layout="@layout/action_bar_layout"/>
+        <include layout="@layout/action_bar_layout" />
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/time_line_rvItems"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
+            app:tabMode="fixed" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:background="@android:color/white" />
+
+    </LinearLayout>
+
 </LinearLayout>
