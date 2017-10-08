@@ -25,7 +25,7 @@ public class TimeLineFragment extends Fragment{
     private SwipeRefreshLayout mSwipeContainer;
     private RecyclerView mTimeLineRecyclerView;
     private TimeLineAdapter mAdapter;
-    public static final String TAG = TimeLineActivity.class.getSimpleName();
+    public static final String TAG = TimeLineFragment.class.getSimpleName();
     private TimelineCallBack mListener;
 
     public interface TimelineCallBack {

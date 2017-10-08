@@ -57,4 +57,10 @@ public class TimeLinePresenter {
             if(list != null) mTimeLineView.showHistoryTweets(list);
         });
     }
+
+    public void fetchMentionedUserAsync(int page) {
+        tweetModel.fetchMentionUser(page, (list, message) -> {
+            if(list != null) mTimeLineView.showMentionUserList(list);
+        });
+    }
 }

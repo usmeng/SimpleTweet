@@ -27,4 +27,6 @@ public interface ITimeLineView {
     void showTweetDetail(Tweet from);
 
     void showPostDonePage(Tweet from);
+
+    void showMentionUserList(List<Tweet> tweets);
 }

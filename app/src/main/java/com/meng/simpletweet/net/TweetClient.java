@@ -84,7 +84,7 @@ public class TweetClient extends OAuthBaseClient {
 		String apiUrl = getApiUrl("statuses/user_timeline.json");
 		RequestParams params = new RequestParams();
 		params.put("screen_name", screenName);
-		params.put("count", 2);
+		params.put("count", count);
 		getClient().get(apiUrl, params, handler);
 	}
 
@@ -92,7 +92,7 @@ public class TweetClient extends OAuthBaseClient {
 	public void getMentionLine(int count, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
 		RequestParams params = new RequestParams();
-		params.put("count", 2);
+		params.put("count", count);
 		getClient().get(apiUrl, params, handler);
 	}
 }

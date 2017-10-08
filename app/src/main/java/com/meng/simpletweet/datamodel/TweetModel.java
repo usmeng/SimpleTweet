@@ -1,5 +1,7 @@
 package com.meng.simpletweet.datamodel;
 
+import android.util.Log;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.meng.simpletweet.RestApplication;
 import com.meng.simpletweet.models.Tweet;
@@ -17,6 +19,8 @@ import cz.msebera.android.httpclient.Header;
  */
 
 public class TweetModel {
+
+    public static final String TAG = TweetModel.class.getSimpleName();
 
     public interface TweetArrayCallback {
         void onResponse(List<Tweet> list, String message);
@@ -74,6 +78,24 @@ public class TweetModel {
                 tweetCallback.onResponse(null, responseString + " : " + throwable.getMessage());
             }
         });
+    }
+
+    public void fetchMentionUser(int page, final TweetArrayCallback tweetCallback) {
+            RestApplication.getRestClient().getMentionLine(10, new JsonHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.e(TAG, response.toString());
+                    tweetCallback.onResponse(Tweet.fromJson(response), null);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    tweetCallback.onResponse(null, responseString + " : " + throwable.getMessage());
+                }
+            });
     }
 
     public void loadTimelineFromLocal(int page, final TweetArrayCallback tweetCallback) {

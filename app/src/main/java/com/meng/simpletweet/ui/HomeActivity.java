@@ -23,7 +23,8 @@ import java.util.List;
 /**
  * Created by mengzhou on 10/4/17.
  */
-public class HomeActivity extends AppCompatActivity implements ITimeLineView, TimeLineFragment.TimelineCallBack{
+public class HomeActivity extends AppCompatActivity implements ITimeLineView,
+        TimeLineFragment.TimelineCallBack, MentionFragment.MentionUserCallBack{
 
     private TimeLinePresenter mTimeLinePresenter;
     private HomeFragmentPagerAdapter mViewPagerAdapter;
@@ -136,6 +137,11 @@ public class HomeActivity extends AppCompatActivity implements ITimeLineView, Ti
     }
 
     @Override
+    public void showMentionUserList(List<Tweet> tweets) {
+        mMentionFragment.addMentionedUser(tweets);
+    }
+
+    @Override
     public void fetchTimelineAsync(int page) {
         mTimeLinePresenter.fetchTimelineAsync(page);
     }
@@ -148,4 +154,11 @@ public class HomeActivity extends AppCompatActivity implements ITimeLineView, Ti
     public void changeTitle(String name) {
 
     }
+
+    @Override
+    public void fetchMentionedUserAsync(int page) {
+        mTimeLinePresenter.fetchMentionedUserAsync(page);
+    }
+
+
 }
