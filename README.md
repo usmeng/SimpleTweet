@@ -49,7 +49,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/usmeng/SimpleTweet/blob/master/screenshot/simple_twitter2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/usmeng/SimpleTweet/blob/master/screenshot/simple_twitter3.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
