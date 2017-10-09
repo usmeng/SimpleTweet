@@ -84,7 +84,7 @@ public class TweetClient extends OAuthBaseClient {
 		String apiUrl = getApiUrl("statuses/show.json");
 		RequestParams params = new RequestParams();
 		params.put("id", id);
-		getClient().post(apiUrl, params, handler);
+		getClient().get(apiUrl, params, handler);
 	}
 
 	// statuses/user_timeline.json?screen_name=twitterapi&count=2

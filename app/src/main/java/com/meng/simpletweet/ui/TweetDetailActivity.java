@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 /**
  * Created by mengzhou on 10/8/17.
  */
-
 public class TweetDetailActivity extends AppCompatActivity {
 
     public final static String TWEET_ID = "id";
@@ -76,7 +75,6 @@ public class TweetDetailActivity extends AppCompatActivity {
         if(user != null) {
             mAtUserTv.setText("@" + user.getScreen_name());
             mEditableBuilder.addPattern(Pattern.compile("\\@(\\w+)"), Color.GRAY, text -> {
-                Toast.makeText(this, user.getScreen_name(), Toast.LENGTH_SHORT).show();
                 /*if(mItemOnClickListener != null) {
                     mItemOnClickListener.onUserProfile(user.getScreen_name());
                 }*/

@@ -142,4 +142,11 @@ public class Tweet extends BaseModel {
 
         return tweets;
     }
+
+    @Override
+    public String toString() {
+        return "Tweet{" +
+                "content='" + content + '\'' +
+                '}';
+    }
 }
