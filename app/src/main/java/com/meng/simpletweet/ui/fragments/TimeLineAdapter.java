@@ -66,7 +66,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
         if(user != null) {
             holder.mAtUserTv.setText("@" + user.getScreen_name());
             mEditableBuilder.addPattern(Pattern.compile("\\@(\\w+)"), Color.GRAY, text -> {
-                Toast.makeText(mContext, user.getScreen_name(), Toast.LENGTH_SHORT).show();
                 if(mItemOnClickListener != null) {
                     mItemOnClickListener.onUserProfile(user.getScreen_name());
                 }
