@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.meng.simpletweet.R;
 import com.meng.simpletweet.models.Tweet;
@@ -99,6 +100,7 @@ public class MentionFragment extends Fragment {
 
     public void addMentionedUser(List<Tweet> tweets) {
         // ...the data has come back, add new items to your adapter...
+        if(tweets.size() == 0) Toast.makeText(getContext(), "No one mentioned you!", Toast.LENGTH_LONG).show();
         mAdapter.addToHead(tweets);
         for(Tweet tweet : tweets) tweet.save();
         if (mSwipeContainer.isRefreshing()) mSwipeContainer.setRefreshing(false);

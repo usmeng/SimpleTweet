@@ -41,8 +41,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
         mContext = context;
         mData = data;
         mInflater = LayoutInflater.from(context);
-
-
     }
 
     public void setOnItemClickListener(TimelineItemOnClickListener listener) {
@@ -59,18 +57,20 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
         Tweet tweet = mData.get(position);
 
         User user = tweet.getUser();
-        PatternEditableBuilder mEditableBuilder = new PatternEditableBuilder();
+
         if(user != null) holder.mUserNameTv.setText(user.getName());
         holder.mTweetTimeTv.setText(Utils.getTime(tweet.getCreatedTime()));
         holder.mTweetContentTv.setText(tweet.getContent());
         if(user != null) {
             holder.mAtUserTv.setText("@" + user.getScreen_name());
+            PatternEditableBuilder mEditableBuilder = new PatternEditableBuilder();
             mEditableBuilder.addPattern(Pattern.compile("\\@(\\w+)"), Color.GRAY, text -> {
                 if(mItemOnClickListener != null) {
                     mItemOnClickListener.onUserProfile(user.getScreen_name());
                 }
             }).into(holder.mAtUserTv);
         }
+        PatternEditableBuilder mEditableBuilder = new PatternEditableBuilder();
         mEditableBuilder.addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE, text -> {
             Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
             if(mItemOnClickListener != null) mItemOnClickListener.onUserProfile(text);
