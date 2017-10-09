@@ -1,8 +1,8 @@
-# Project 3 - *Name of App Here*
+# Project 3 - *Simple Twitter*
 
 **Name of your app** is an android app that allows a user to view his Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://developer.twitter.com/en/docs/api-reference-index).
 
-Time spent: **X** hours spent in total
+Time spent: **15** hours spent in total
 
 ## User Stories
 
@@ -45,7 +45,7 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-** [x] Use MVP architecture to separate presentation layer and data layer
+ * [x] Use MVP architecture to separate presentation layer and data layer
  * [x] Use ReycleView instead of listview
  * [x] Use Constrainlayout instead of Linerlayout and relativelayout
 
@@ -53,7 +53,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/usmeng/SimpleTweet/blob/master/screenshot/simple_twitter.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
