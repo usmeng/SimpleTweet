@@ -34,14 +34,14 @@ The following **optional** features are implemented:
 
 The following **bonus** features are implemented:
 
-** [x] Use Parcelable instead of Serializable using the popular [Parceler library](http://guides.codepath.com/android/Using-Parceler).
+ * [x] Use Parcelable instead of Serializable using the popular [Parceler library](http://guides.codepath.com/android/Using-Parceler).
  * [ ] Leverages the [data binding support module](http://guides.codepath.com/android/Applying-Data-Binding-for-Views) to bind data into layout templates.
  * [x] On the profile screen, leverage the [CoordinatorLayout](http://guides.codepath.com/android/Handling-Scrolls-with-CoordinatorLayout#responding-to-scroll-events) to [apply scrolling behavior](https://hackmd.io/s/SJyDOCgU) as the user scrolls through the profile timeline.
  * [ ] User can view their direct messages (or send new ones)
 
 The following **additional** features are implemented:
 
-** [x] Use MVP architecture to separate presentation layer and data layer
+ * [x] Use MVP architecture to separate presentation layer and data layer
  * [x] Use ReycleView instead of listview
  * [x] Use Constrainlayout instead of Linerlayout and relativelayout
 
