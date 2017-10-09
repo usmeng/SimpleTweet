@@ -1,11 +1,14 @@
 package com.meng.simpletweet.models;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.meng.simpletweet.data.MyDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import org.json.JSONObject;
 
 /**
  * Created by mengzhou on 9/28/17.
@@ -125,4 +128,11 @@ public class User extends BaseModel {
     public boolean isFollowing() {
         return following;
     }
+
+    public static User from(JSONObject object) {
+        User user = new Gson().fromJson(object.toString(), User.class);
+        user.save();
+        return user;
+    }
+
 }

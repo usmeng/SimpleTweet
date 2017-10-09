@@ -15,6 +15,7 @@ import com.meng.simpletweet.R;
 import com.meng.simpletweet.models.Tweet;
 import com.meng.simpletweet.presenter.TimeLinePresenter;
 import com.meng.simpletweet.ui.fragments.MentionFragment;
+import com.meng.simpletweet.ui.fragments.TimeLineAdapter;
 import com.meng.simpletweet.ui.fragments.TimeLineFragment;
 import com.meng.simpletweet.ui.widgets.TweetDialog;
 
@@ -24,7 +25,7 @@ import java.util.List;
  * Created by mengzhou on 10/4/17.
  */
 public class HomeActivity extends AppCompatActivity implements ITimeLineView,
-        TimeLineFragment.TimelineCallBack, MentionFragment.MentionUserCallBack{
+        TimeLineFragment.TimelineCallBack, MentionFragment.MentionUserCallBack {
 
     private TimeLinePresenter mTimeLinePresenter;
     private HomeFragmentPagerAdapter mViewPagerAdapter;
@@ -58,6 +59,18 @@ public class HomeActivity extends AppCompatActivity implements ITimeLineView,
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        mTimeLineFragment.setOnItemClickListerner(new TimeLineAdapter.TimelineItemOnClickListener() {
+            @Override
+            public void onUserProfile(String screenName) {
+                startActivity(UserProfileActivity.initIntent(HomeActivity.this, screenName));
+            }
+
+            @Override
+            public void onItemClick(String id) {
+                startActivity(TweetDetailActivity.initIntent(HomeActivity.this, id));
+            }
+        });
     }
 
     private void initActionBar() {
@@ -90,7 +103,7 @@ public class HomeActivity extends AppCompatActivity implements ITimeLineView,
     }
 
     public void onGoUserCenter(View view) {
-
+        startActivity(UserProfileActivity.initIntent(HomeActivity.this, ""));
     }
 
     public void onCreateTweet(View view) {
@@ -159,6 +172,5 @@ public class HomeActivity extends AppCompatActivity implements ITimeLineView,
     public void fetchMentionedUserAsync(int page) {
         mTimeLinePresenter.fetchMentionedUserAsync(page);
     }
-
 
 }

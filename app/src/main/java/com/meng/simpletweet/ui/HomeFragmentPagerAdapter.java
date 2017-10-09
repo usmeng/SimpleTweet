@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.meng.simpletweet.ui.fragments.MentionFragment;
 import com.meng.simpletweet.ui.fragments.TimeLineFragment;
+import com.meng.simpletweet.ui.fragments.TimeLineFragment2;
 
 /**
  * Created by mengzhou on 10/4/17.

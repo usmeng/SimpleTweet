@@ -25,6 +25,7 @@ public class TimeLineFragment extends Fragment{
     private SwipeRefreshLayout mSwipeContainer;
     private RecyclerView mTimeLineRecyclerView;
     private TimeLineAdapter mAdapter;
+    TimeLineAdapter.TimelineItemOnClickListener listener;
     public static final String TAG = TimeLineFragment.class.getSimpleName();
     private TimelineCallBack mListener;
 
@@ -65,6 +66,12 @@ public class TimeLineFragment extends Fragment{
         return view;
     }
 
+    public void setOnItemClickListerner(TimeLineAdapter.TimelineItemOnClickListener listener) {
+        this.listener = listener;
+        if(mAdapter == null) return;
+        mAdapter.setOnItemClickListener(listener);
+    }
+
     private void initSwipeContainer(View view) {
         mSwipeContainer = view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -89,6 +96,7 @@ public class TimeLineFragment extends Fragment{
         mTimeLineRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         mAdapter = new TimeLineAdapter(new ArrayList<>(), getContext());
         mTimeLineRecyclerView.setAdapter(mAdapter);
+        if(listener != null) mAdapter.setOnItemClickListener(listener);
 
         mTimeLineRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override

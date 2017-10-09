@@ -1,6 +1,7 @@
 package com.meng.simpletweet.datamodel;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.meng.simpletweet.RestApplication;
@@ -47,18 +48,38 @@ public class TweetModel {
         });
     }
 
+    public void fetchUserTimelineAsync(String screenName, int page, final TweetArrayCallback tweetCallback) {
+        RestApplication.getRestClient().getUserTimeline(screenName, page, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
+                super.onSuccess(statusCode, headers, json);
+                tweetCallback.onResponse(Tweet.fromJson(json), null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                tweetCallback.onResponse(null, responseString + " : " + throwable.getMessage());
+            }
+        });
+    }
+
+
     public void retrieveTweet(String id, final TweetCallback tweetCallback) {
         RestApplication.getRestClient().retrieveTweet(id, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                Log.e("TweetModel", "response success: " + response.toString());
                 tweetCallback.onResponse(Tweet.from(response), null);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                Log.e("TweetModel", "response failed: " + responseString);
                 tweetCallback.onResponse(null, responseString + " : " + throwable.getMessage());
             }
         });

@@ -65,6 +65,14 @@ public class TweetClient extends OAuthBaseClient {
 		getClient().get(apiUrl, params, handler);
 	}
 
+	public void getUserTimeline(String screenName, int count, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("screen_name", screenName);
+		params.put("count", count);
+		getClient().get(apiUrl, params, handler);
+	}
+
 	public void postTweet(String body, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/update.json");
 		RequestParams params = new RequestParams();
@@ -93,6 +101,21 @@ public class TweetClient extends OAuthBaseClient {
 		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
 		RequestParams params = new RequestParams();
 		params.put("count", count);
+		getClient().get(apiUrl, params, handler);
+	}
+
+	// https://api.twitter.com/1.1/account/verify_credentials.json
+	public void getMyProfile(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		getClient().get(apiUrl, new RequestParams(), handler);
+	}
+
+	// https://api.twitter.com/1.1/account/verify_credentials.json
+	public void getUserProfile(String screenName, String id, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("users/show.json");
+		RequestParams params = new RequestParams();
+		if(id != null) params.put("user_id", id);
+		if(screenName != null) params.put("screen_name", screenName);
 		getClient().get(apiUrl, params, handler);
 	}
 }

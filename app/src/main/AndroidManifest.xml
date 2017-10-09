@@ -33,6 +33,8 @@
         </activity>
 
         <activity android:name=".ui.HomeActivity"/>
+        <activity android:name=".ui.TweetDetailActivity"/>
+        <activity android:name=".ui.UserProfileActivity"/>
     </application>
 
 </manifest>

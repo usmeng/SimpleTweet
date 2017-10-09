@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.meng.simpletweet.R;
@@ -28,14 +29,24 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
     private List<Tweet> mData;
     private final LayoutInflater mInflater;
     private Context mContext;
-    private final PatternEditableBuilder mEditableBuilder;
+//    private final PatternEditableBuilder mEditableBuilder;
+    public interface TimelineItemOnClickListener {
+        void onUserProfile(String screenName);
+        void onItemClick(String id);
+    }
+
+    private TimelineItemOnClickListener mItemOnClickListener;
 
     public TimeLineAdapter(List<Tweet> data, Context context) {
         mContext = context;
         mData = data;
         mInflater = LayoutInflater.from(context);
 
-        mEditableBuilder = new PatternEditableBuilder();
+
+    }
+
+    public void setOnItemClickListener(TimelineItemOnClickListener listener) {
+        this.mItemOnClickListener = listener;
     }
 
     @Override
@@ -48,11 +59,23 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
         Tweet tweet = mData.get(position);
 
         User user = tweet.getUser();
+        PatternEditableBuilder mEditableBuilder = new PatternEditableBuilder();
         if(user != null) holder.mUserNameTv.setText(user.getName());
         holder.mTweetTimeTv.setText(Utils.getTime(tweet.getCreatedTime()));
         holder.mTweetContentTv.setText(tweet.getContent());
-        if(user != null) holder.mAtUserTv.setText("@" + user.getScreen_name());
-        mEditableBuilder.addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE, text -> Utils.showToast(mContext, text)).into(holder.mTweetContentTv);
+        if(user != null) {
+            holder.mAtUserTv.setText("@" + user.getScreen_name());
+            mEditableBuilder.addPattern(Pattern.compile("\\@(\\w+)"), Color.GRAY, text -> {
+                Toast.makeText(mContext, user.getScreen_name(), Toast.LENGTH_SHORT).show();
+                if(mItemOnClickListener != null) {
+                    mItemOnClickListener.onUserProfile(user.getScreen_name());
+                }
+            }).into(holder.mAtUserTv);
+        }
+        mEditableBuilder.addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE, text -> {
+            Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
+            if(mItemOnClickListener != null) mItemOnClickListener.onUserProfile(text);
+        }).into(holder.mTweetContentTv);
         holder.mTweetContentTv.setLines(tweet.getContent().length() / 40 + 1);
 
         if(user!= null) Glide.with(mContext).load(user.profile_image_url).into(holder.mHeadIcon);
@@ -60,6 +83,10 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TweetH
         holder.mSaveTv.setText(String.valueOf(tweet.getFavorite_count()));
 
         holder.mAttachImg.setVisibility(View.INVISIBLE);
+
+        holder.mView.setOnClickListener(listener -> {
+            if(mItemOnClickListener != null) mItemOnClickListener.onItemClick(String.valueOf(tweet.getId()));
+        });
     }
 
     @Override

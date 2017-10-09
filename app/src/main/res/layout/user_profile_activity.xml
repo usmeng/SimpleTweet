@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/user_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        android:textAlignment="center"
+        app:titleTextColor="@android:color/black">
+
+        <include layout="@layout/action_bar_layout" />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_profile_bg"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/profile_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="User ID"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/img_profile_bg"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/tv_friend_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_profile_bg"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <TextView
+            android:id="@+id/tv_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="followers: "
+            app:layout_constraintEnd_toStartOf="@+id/tv_follower_value"
+            app:layout_constraintTop_toBottomOf="@+id/img_profile_bg" />
+
+        <TextView
+            android:id="@+id/tv_follower_value"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="225"
+            app:layout_constraintEnd_toStartOf="@+id/tv_friend_request"
+            app:layout_constraintTop_toBottomOf="@+id/img_profile_bg" />
+
+        <TextView
+            android:id="@+id/tv_following_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="225"
+            app:layout_constraintEnd_toStartOf="@+id/tv_followers"
+            app:layout_constraintTop_toBottomOf="@+id/img_profile_bg" />
+
+        <TextView
+            android:id="@+id/tv_following"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="following: "
+            app:layout_constraintEnd_toStartOf="@+id/tv_following_value"
+            app:layout_constraintTop_toBottomOf="@+id/img_profile_bg" />
+
+        <ImageView
+            android:id="@+id/img_head_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_following"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/head_pg" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/time_line_rvItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

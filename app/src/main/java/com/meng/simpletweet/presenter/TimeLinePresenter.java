@@ -38,6 +38,13 @@ public class TimeLinePresenter {
         });
     }
 
+    public void fetchUserTimeAsync(String screenName, int count) {
+        tweetModel.fetchUserTimelineAsync(screenName, count, ((list, message) -> {
+            if(list != null) mTimeLineView.showFreshTweets(list);
+            else mTimeLineView.showError(message);
+        }));
+    }
+
     public void retrieveTweet(String id) {
         tweetModel.retrieveTweet(id, (tweet, message) -> {
             if(tweet != null) mTimeLineView.showTweetDetail(tweet);

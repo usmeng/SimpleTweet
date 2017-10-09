@@ -11,5 +11,6 @@
     <string name="what_is_happening">what\'s happening?</string>
     <string name="excess_limited_words">Excess limited words!</string>
     <string name="can_excess_140_words">can\'t excess 140 words </string>
+    <string name="user_name">user name</string>
 
 </resources>
